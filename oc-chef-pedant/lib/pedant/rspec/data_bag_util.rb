@@ -100,16 +100,16 @@ module Pedant
         {
           :status => 200,
           :body_exact => {
-            data_bag_item_1_id => api_url("/data/#{data_bag_name}/#{data_bag_item_1_id}"),
-            data_bag_item_2_id => api_url("/data/#{data_bag_name}/#{data_bag_item_2_id}"),
-            data_bag_item_3_id => api_url("/data/#{data_bag_name}/#{data_bag_item_3_id}")
+            data_bag_item_1_id => platform.resource_url("/data/#{data_bag_name}/#{data_bag_item_1_id}"),
+            data_bag_item_2_id => platform.resource_url("/data/#{data_bag_name}/#{data_bag_item_2_id}"),
+            data_bag_item_3_id => platform.resource_url("/data/#{data_bag_name}/#{data_bag_item_3_id}")
           }
         }
       end
 
       let(:data_bag_not_found_response) { http_404_response.with(:body_exact, "error" => ["Cannot load data bag #{data_bag_name}"] ) }
 
-      let(:create_data_bag_success_response) { http_201_response.with(:body_exact, "uri" => api_url("/data/#{data_bag_name}")) }
+      let(:create_data_bag_success_response) { http_201_response.with(:body_exact, "uri" => platform.resource_url("/data/#{data_bag_name}")) }
       let(:create_data_bag_no_name_failure_response) { http_400_response.with(:body_exact, "error"=> ["Field 'name' missing"]) }
       let(:create_data_bag_bad_name_failure_response) { http_400_response.with(:body_exact, "error" => ["Field 'name' invalid"]) }
       let(:create_data_bag_conflict_response) { http_409_response.with(:body_Exact, "error" => ["Data bag already exists"]) }

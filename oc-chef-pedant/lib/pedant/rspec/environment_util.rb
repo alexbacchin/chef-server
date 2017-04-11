@@ -246,7 +246,7 @@ module Pedant
               response.should look_like({
                                           :status => 201,
                                           :body_exact => {
-                                            "uri" => api_url("/environments/" +
+                                            "uri" => platform.resource_url("/environments/" +
                                                              "#{new_environment_name}")
                                           }})
             end

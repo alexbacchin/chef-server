@@ -17,7 +17,7 @@ describe "users", :users do
   let(:default_users_body)        { default_pedant_user_names.map { |user| {"user" => {"username" => user} } } }
 
   context "/users endpoint" do
-    let(:request_url) { "#{platform.server}/users" }
+    let(:request_url) { "#{platform.base_resource_url}/users" }
 
     context "GET /users" do
       let(:users_body) do
@@ -190,7 +190,7 @@ describe "users", :users do
 
       let(:response_body) do
         {
-          "uri" => "#{platform.server}/users/#{username}",
+          "uri" => "#{platform.base_resource_url}/users/#{username}",
           "private_key" => private_key_regex
         }
       end

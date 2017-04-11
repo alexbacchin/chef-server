@@ -21,7 +21,7 @@ describe "Org Creation", :org_creation do
 
     let(:default_groups) { %w(admins billing-admins clients users) }
     let(:default_group_hash) { Hash[*default_groups.map(&group_to_url).flatten]  }
-    let(:group_to_url) { ->(x) { [x, platform.api_url("/groups/#{x}", org)] } }
+    let(:group_to_url) { ->(x) { [x, platform.resource_url("/groups/#{x}", org)] } }
 
     it 'should have default groups' do
       expect(parsed_response).to loosely_match default_group_hash

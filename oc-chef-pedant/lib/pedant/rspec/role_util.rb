@@ -241,7 +241,7 @@ module Pedant
       let(:create_role_success_response) do
         {
           :status => 201,
-          :body => { "uri" => api_url("/roles/#{role_name}") }
+          :body => { "uri" => platform.resource_url("/roles/#{role_name}") }
         }
       end
 

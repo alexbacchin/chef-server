@@ -433,7 +433,7 @@ module Pedant
           # object, this is what we expect to get back.
           let(:single_search_expected_results) do
             [{
-               "url" => api_url("/#{object_type}s/#{send(object_name_symbol)}"),
+               "url" => platform.resource_url("/#{object_type}s/#{send(object_name_symbol)}"),
                "data" => {
                   # This is getting the value from the JSON as posted
                   # to create the object, which is not necessarily the
@@ -457,7 +457,7 @@ module Pedant
             single_search_expected_results +
             objects.map{|o|
               {
-                "url" => api_url("/#{object_type}s/#{o['name']}"),
+                "url" => platform.resource_url("/#{object_type}s/#{o['name']}"),
                 "data" => {
                   # This is getting the value from the JSON as posted
                   # to create the object, which is not necessarily the
@@ -573,7 +573,7 @@ module Pedant
             end
             let(:search_result_items) do
               [{
-                 "url" => api_url("/nodes/#{node_name}"),
+                 "url" => platform.resource_url("/nodes/#{node_name}"),
                  "data" => {
                    "target" => expected_result
                  }

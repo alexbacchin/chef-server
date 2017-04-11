@@ -36,7 +36,7 @@ describe "Environments API Endpoint", :environments do
       let(:request_payload) { full_environment(new_environment_name) }
 
       let(:expected_response) { resource_created_exact_response }
-      let(:created_resource)  { { "uri" => api_url("/environments/#{new_environment_name}") } }
+      let(:created_resource)  { { "uri" => platform.resource_url("/environments/#{new_environment_name}") } }
       let(:persisted_resource) { get_environment requestor, new_environment_name }
 
 
@@ -141,7 +141,7 @@ describe "Environments API Endpoint", :environments do
                 should look_like({
                 :status => 201,
                 :body_exact => {
-                "uri" => api_url("/environments/#{new_environment_name}")
+                "uri" => platform.resource_url("/environments/#{new_environment_name}")
               }
               })
             end

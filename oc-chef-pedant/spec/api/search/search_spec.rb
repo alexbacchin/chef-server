@@ -122,7 +122,7 @@ describe 'Search API endpoint', :search do
 
         let(:nodes_container) { api_url("/nodes") }
 
-        let(:resource_url) { api_url "/nodes/#{node_name}" }
+        let(:resource_url) { platform.resource_url "/nodes/#{node_name}" }
 
         let(:node) do
           new_node(node_name).tap do |n|
@@ -490,7 +490,7 @@ describe 'Search API endpoint', :search do
         context 'a partial search', :smoke do
           let(:request_payload){ {"foo" => ["foo"]} }
           let(:search_result_items){[{
-                                       "url" => api_url("/data/#{data_bag_name}/#{data_bag_item_name}"),
+                                       "url" => platform.resource_url("/data/#{data_bag_name}/#{data_bag_item_name}"),
                                        "data" => {
                                          "foo" => "bar"
                                        }
@@ -509,7 +509,7 @@ describe 'Search API endpoint', :search do
             let(:request_payload) { { 'private_key' => %w(ssh private_key), 'public_key' => %w(ssh public_key) } }
             let(:search_result_items) do
               [ {
-                  'url'  => api_url("/data/#{data_bag_name}/#{alice['id']}"),
+                  'url'  => platform.resource_url("/data/#{data_bag_name}/#{alice['id']}"),
                   'data' => {
                     'private_key' => alice['ssh']['private_key'],
                     'public_key'  => alice['ssh']['public_key'],
@@ -714,7 +714,7 @@ describe 'Search API endpoint', :search do
                  :payload => payload) do |response|
               response.should look_like({:status => 200,
                                           :body => {
-                                           "rows" => [{ 'url' => api_url("/nodes/#{node_name}"),
+                                           "rows" => [{ 'url' => platform.resource_url("/nodes/#{node_name}"),
                                                         'data' => {
                                                           'we_found_default' => true
                                                         }}]}})
@@ -731,7 +731,7 @@ describe 'Search API endpoint', :search do
                  :payload => payload) do |response|
               response.should look_like({:status => 200,
                                          :body => {
-                                           "rows" => [{ 'url' => api_url("/nodes/#{node_name}"),
+                                           "rows" => [{ 'url' => platform.resource_url("/nodes/#{node_name}"),
                                                         'data' => {
                                                           'we_found_normal' => true
                                                         }}]}})
@@ -748,7 +748,7 @@ describe 'Search API endpoint', :search do
                  :payload => payload) do |response|
               response.should look_like({:status => 200,
                                          :body => {
-                                           "rows" => [{ 'url' => api_url("/nodes/#{node_name}"),
+                                           "rows" => [{ 'url' => platform.resource_url("/nodes/#{node_name}"),
                                                         'data' => {
                                                           'goal' => 'found_it_normal'
                                                         }}]}})

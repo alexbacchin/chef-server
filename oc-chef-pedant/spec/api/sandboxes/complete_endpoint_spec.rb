@@ -51,7 +51,7 @@ describe "Sandboxes API Endpoint", :sandboxes do
         {
           "sandbox_id" => sandbox_id,
           # Sandbox URIs are always in terms of our API
-          "uri" => api_url("/sandboxes/#{sandbox_id}"),
+          "uri" => platform.resource_url("/sandboxes/#{sandbox_id}"),
           "checksums" => {
             checksums[0] => {
             # URLs might be for local
@@ -118,7 +118,7 @@ describe "Sandboxes API Endpoint", :sandboxes do
       let(:created_resource) do
         {
           "sandbox_id" => sandbox_id,
-          "uri" => api_url("/sandboxes/#{sandbox_id}"),
+          "uri" => platform.resource_url("/sandboxes/#{sandbox_id}"),
           "checksums" => {
             new_file_checksum => {
               "url" => url_regex,

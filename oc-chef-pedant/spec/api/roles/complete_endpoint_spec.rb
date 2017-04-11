@@ -41,7 +41,7 @@ describe "Testing the Roles API endpoint", :roles do
 
       context 'with roles' do
         include_context 'with temporary testing role'
-        let(:roles){ {role_name => api_url("/roles/#{role_name}")}}
+        let(:roles){ {role_name => pedant.resource_url("/roles/#{role_name}")}}
         it 'returns a 200 and a hash of name -> url' do
           should look_like fetch_roles_list_response
         end

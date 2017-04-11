@@ -18,23 +18,24 @@ describe "opscode-account containers", :containers do
 
   context "/containers endpoint" do
     let(:request_url) { api_url("containers") }
+    let(:resource_url) { platform.resource_url("containers") }
 
     context "GET /containers" do
       # This is only a partial body -- there are other containers as well, but these
       # should all exist for an organization:
       let(:list_of_containers) {{
-          "clients" => "#{request_url}/clients",
-          "containers" => "#{request_url}/containers",
-          "cookbooks" => "#{request_url}/cookbooks",
-          "data" => "#{request_url}/data",
-          "environments" => "#{request_url}/environments",
-          "groups" => "#{request_url}/groups",
-          "nodes" => "#{request_url}/nodes",
-          "roles" => "#{request_url}/roles",
-          "sandboxes" => "#{request_url}/sandboxes",
-          "policies" => "#{request_url}/policies",
-          "policy_groups" => "#{request_url}/policy_groups",
-          "cookbook_artifacts" => "#{request_url}/cookbook_artifacts"
+          "clients" => "#{resource_url}/clients",
+          "containers" => "#{resource_url}/containers",
+          "cookbooks" => "#{resource_url}/cookbooks",
+          "data" => "#{resource_url}/data",
+          "environments" => "#{resource_url}/environments",
+          "groups" => "#{resource_url}/groups",
+          "nodes" => "#{resource_url}/nodes",
+          "roles" => "#{resource_url}/roles",
+          "sandboxes" => "#{resource_url}/sandboxes",
+          "policies" => "#{resource_url}/policies",
+          "policy_groups" => "#{resource_url}/policy_groups",
+          "cookbook_artifacts" => "#{resource_url}/cookbook_artifacts"
         }}
 
       context "admin user" do
@@ -91,40 +92,40 @@ describe "opscode-account containers", :containers do
         }}
 
       let(:response_body) {{
-          "uri" => "#{request_url}/#{new_container}"
+          "uri" => platform.resource_url("containers/#{new_container}")
         }}
 
       # This is only a partial body -- there are other containers as well, but these
       # should all exist for an organization:
       let(:list_of_containers_without_new_container) {{
-          "clients" => "#{request_url}/clients",
-          "containers" => "#{request_url}/containers",
-          "cookbooks" => "#{request_url}/cookbooks",
-          "data" => "#{request_url}/data",
-          "environments" => "#{request_url}/environments",
-          "groups" => "#{request_url}/groups",
-          "nodes" => "#{request_url}/nodes",
-          "roles" => "#{request_url}/roles",
-          "sandboxes" => "#{request_url}/sandboxes",
-          "policies" => "#{request_url}/policies",
-          "policy_groups" => "#{request_url}/policy_groups",
-          "cookbook_artifacts" => "#{request_url}/cookbook_artifacts"
+          "clients" => "#{resource_url}/clients",
+          "containers" => "#{resource_url}/containers",
+          "cookbooks" => "#{resource_url}/cookbooks",
+          "data" => "#{resource_url}/data",
+          "environments" => "#{resource_url}/environments",
+          "groups" => "#{resource_url}/groups",
+          "nodes" => "#{resource_url}/nodes",
+          "roles" => "#{resource_url}/roles",
+          "sandboxes" => "#{resource_url}/sandboxes",
+          "policies" => "#{resource_url}/policies",
+          "policy_groups" => "#{resource_url}/policy_groups",
+          "cookbook_artifacts" => "#{resource_url}/cookbook_artifacts"
         }}
 
       let(:list_of_containers_with_new_container) {{
-          "clients" => "#{request_url}/clients",
-          "containers" => "#{request_url}/containers",
-          "cookbooks" => "#{request_url}/cookbooks",
-          "data" => "#{request_url}/data",
-          "environments" => "#{request_url}/environments",
-          "groups" => "#{request_url}/groups",
-          "nodes" => "#{request_url}/nodes",
-          "roles" => "#{request_url}/roles",
-          "sandboxes" => "#{request_url}/sandboxes",
-          "policies" => "#{request_url}/policies",
-          "policy_groups" => "#{request_url}/policy_groups",
-          "cookbook_artifacts" => "#{request_url}/cookbook_artifacts",
-          new_container => "#{request_url}\/#{new_container}",
+          "clients" => "#{resource_url}/clients",
+          "containers" => "#{resource_url}/containers",
+          "cookbooks" => "#{resource_url}/cookbooks",
+          "data" => "#{resource_url}/data",
+          "environments" => "#{resource_url}/environments",
+          "groups" => "#{resource_url}/groups",
+          "nodes" => "#{resource_url}/nodes",
+          "roles" => "#{resource_url}/roles",
+          "sandboxes" => "#{resource_url}/sandboxes",
+          "policies" => "#{resource_url}/policies",
+          "policy_groups" => "#{resource_url}/policy_groups",
+          "cookbook_artifacts" => "#{resource_url}/cookbook_artifacts",
+          new_container => "#{resource_url}\/#{new_container}",
         }}
 
       after :each do

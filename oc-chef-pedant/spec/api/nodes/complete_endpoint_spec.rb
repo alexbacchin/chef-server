@@ -118,6 +118,7 @@ describe "Testing the Nodes API endpoint", :nodes do
     context 'when validating' do
       after(:each) { delete_node platform.admin_user, resource_name }
       let(:resource_url) { api_url "/nodes/#{resource_name}" }
+      let(:reponse_url) { platform.resource_url "/nodes/#{resource_name}" }
 
       context "when validating 'name' field" do
         let(:validate_attribute) { 'name' }
@@ -356,7 +357,7 @@ describe "Testing the Nodes API endpoint", :nodes do
 
     context 'without existing node name', :smoke do
       let(:expected_response) { resource_created_exact_response }
-      let(:created_resource) { { 'uri' => resource_url }  }
+      let(:created_resource) { { 'uri' => response_url }  }
 
       let(:node) { new_node(node_name) }
 
@@ -385,7 +386,7 @@ describe "Testing the Nodes API endpoint", :nodes do
 
     let(:request_method)  { :PUT }
     let(:request_url)     { api_url "/nodes/#{node_name}" }
-    let(:resource_url)    { api_url "/nodes/#{node_name}" }
+    let(:resource_url)    { pedant.resource_url "/nodes/#{node_name}" }
     let(:node_name)       { 'pedant_node_test' }
 
     let(:minimal_node_update) do
@@ -410,7 +411,7 @@ describe "Testing the Nodes API endpoint", :nodes do
       let(:default_resource_attributes) { node }
       let(:required_attributes) { } # PUT /nodes works like PATCH
       let(:original_resource_attributes) { node }
-      let(:persisted_resource_response) { get(resource_url, platform.admin_user) }
+      let(:persisted_resource_response) { get(request_url, platform.admin_user) }
 
       # Node names are fixed, once created cannot be renamed
       # If you pass 'name' in the update, it must match the URL
@@ -473,7 +474,7 @@ describe "Testing the Nodes API endpoint", :nodes do
             response = put(request_url, requestor, payload: request_payload)
             expect(response.code).to eq(200)
 
-            get_response = get(resource_url, requestor)
+            get_response = get(request_url, requestor)
 
             expect(get_response.code).to eq(200)
             returned_resource = parse(get_response.body)
@@ -569,7 +570,7 @@ describe "Testing the Nodes API endpoint", :nodes do
             response = put(request_url, requestor, payload: request_payload)
             expect(response.code).to eq(200)
 
-            get_response = get(resource_url, requestor)
+            get_response = get(request_url, requestor)
 
             expect(get_response.code).to eq(200)
             returned_resource = parse(get_response.body)

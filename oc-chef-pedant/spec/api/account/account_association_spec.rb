@@ -125,23 +125,24 @@ describe "opscode-account user association", :association do
 
   def invite_user(orgname, username, inviter)
     url = "#{platform.server}/organizations/#{orgname}/association_requests"
+    resource_url = platform.resource_url("association_requests", orgname)
     post(url, inviter, :payload=>make_invite_payload(username)) do |response|
       response.should look_like({ :status => 201 })
       uri = parse(response)['uri']
-      uri.split('/')[0..-2].should == url.split('/')
+      uri.split('/')[0..-2].should == resource_url.split('/')
       return uri.split('/')[-1]
     end
     return nil
   end
 
   def cleanup_requests_for_org(orgname)
-      org_assoc_url = "#{platform.server}/organizations/#{orgname}/association_requests"
-      get(org_assoc_url, platform.admin_user) do |response|
+    org_assoc_url = "#{platform.server}/organizations/#{orgname}/association_requests"
+    get(org_assoc_url, platform.admin_user) do |response|
         parse(response).each do |invite|
           id = invite["id"]
           delete(api_url("association_requests/#{id}"), platform.superuser).should look_like({:status => 200})
         end
-      end
+    end
   end
 
   def cleanup_requests_for_user(user)

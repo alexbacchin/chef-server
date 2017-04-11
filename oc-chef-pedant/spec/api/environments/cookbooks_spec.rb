@@ -119,10 +119,10 @@ describe "/environments/ENVIRONMENT/cookbooks API endpoint", :environments, :coo
       latest.inject({}) do |body, cookbook_spec|
         name, version_specs  = cookbook_spec
         body[name] = {
-          "url" => api_url("/cookbooks/#{name}"),
+          "url" => platform.resource_url("/cookbooks/#{name}"),
           "versions" => version_specs.map do |version_string, recipe_names|
             {
-              "url" => api_url("/cookbooks/#{name}/#{version_string}"),
+              "url" => platform.resource_url("/cookbooks/#{name}/#{version_string}"),
               "version" => version_string
             }
           end

@@ -444,8 +444,8 @@ describe "Data Bag API endpoint", :data_bags do
             get(named_data_bag_url, requestor).should look_like({
                                                                   :status => 200,
                                                                   :body_exact => {
-                                                                    data_bag_item_2_id => api_url("/data/#{data_bag_name}/#{data_bag_item_2_id}"),
-                                                                    data_bag_item_3_id => api_url("/data/#{data_bag_name}/#{data_bag_item_3_id}"),
+                                                                    data_bag_item_2_id => platform.resource_url("/data/#{data_bag_name}/#{data_bag_item_2_id}"),
+                                                                    data_bag_item_3_id => platform.resource_url("/data/#{data_bag_name}/#{data_bag_item_3_id}"),
                                                                   }
                                                                 })
           end

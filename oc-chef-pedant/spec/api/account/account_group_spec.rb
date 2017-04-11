@@ -6,15 +6,16 @@ describe "opscode-account groups", :groups do
 
   context "/groups endpoint" do
     let(:request_url) { api_url("groups") }
+    let(:resource_url) { platform.resource_url("groups") }
 
     context "GET /groups" do
       # This is only a partial body -- there are other groups as well, but these
       # should all exist for an organization:
       let(:default_groups) {{
-          "admins" => "#{request_url}/admins",
-          "billing-admins" => "#{request_url}/billing-admins",
-          "clients" => "#{request_url}/clients",
-          "users" => "#{request_url}/users"
+          "admins" => "#{resource_url}/admins",
+          "billing-admins" => "#{resource_url}/billing-admins",
+          "clients" => "#{resource_url}/clients",
+          "users" => "#{resource_url}/users"
         }}
 
       context "admin user" do
@@ -69,24 +70,24 @@ describe "opscode-account groups", :groups do
         }}
 
       let(:response_body) {{
-          "uri" => "#{request_url}/#{new_group}"
+          "uri" => "#{resource_url}/#{new_group}"
         }}
 
       # This is only a partial body -- there are other groups as well, but these
       # should all exist for an organization:
       let(:list_of_groups_without_new_group) {{
-          "admins" => "#{request_url}/admins",
-          "billing-admins" => "#{request_url}/billing-admins",
-          "clients" => "#{request_url}/clients",
-          "users" => "#{request_url}/users"
+          "admins" => "#{resource_url}/admins",
+          "billing-admins" => "#{resource_url}/billing-admins",
+          "clients" => "#{resource_url}/clients",
+          "users" => "#{resource_url}/users"
         }}
 
       let(:list_of_groups_with_new_group) {{
-          "admins" => "#{request_url}/admins",
-          "billing-admins" => "#{request_url}/billing-admins",
-          "clients" => "#{request_url}/clients",
-          "users" => "#{request_url}/users",
-          new_group => "#{request_url}\/#{new_group}",
+          "admins" => "#{resource_url}/admins",
+          "billing-admins" => "#{resource_url}/billing-admins",
+          "clients" => "#{resource_url}/clients",
+          "users" => "#{resource_url}/users",
+          new_group => "#{resource_url}\/#{new_group}",
         }}
 
       after :each do
@@ -415,6 +416,8 @@ describe "opscode-account groups", :groups do
 
   context "/groups/<name> endpoint" do
     let(:request_url) { api_url("groups/#{test_group}") }
+    let(:resource_url) { platform.resource_url("groups/#{test_group}") }
+
     let(:test_group) { "test-group" }
 
     before :each do
