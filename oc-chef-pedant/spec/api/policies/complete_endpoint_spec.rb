@@ -164,7 +164,7 @@ describe "Policies API endpoint", :policies do
       let(:expected_policies_list) do
         {
           "some_policy_name" => {
-            "uri" => api_url("policies/some_policy_name"),
+            "uri" => platform.resource_url("policies/some_policy_name"),
             "revisions" => {
               "909c26701e291510eacdc6c06d626b9fa5350d25" => {}
             }
@@ -175,7 +175,7 @@ describe "Policies API endpoint", :policies do
       let(:expected_policy_group_list) do
         {
           "some_policy_group" => {
-            "uri" => api_url("policy_groups/some_policy_group"),
+            "uri" => platform.resource_url("policy_groups/some_policy_group"),
             "policies" => {
               "some_policy_name" => {
                 "revision_id" => "909c26701e291510eacdc6c06d626b9fa5350d25"
@@ -205,7 +205,7 @@ describe "Policies API endpoint", :policies do
       let(:expected_policy_list) do
         {
           "some_policy_name" => {
-            "uri" => api_url("policies/some_policy_name"),
+            "uri" => platform.resource_url("policies/some_policy_name"),
             "revisions" => {
               "909c26701e291510eacdc6c06d626b9fa5350d25" => {}
             }
@@ -216,7 +216,7 @@ describe "Policies API endpoint", :policies do
       let(:expected_policy_group_list) do
         {
           "some_policy_group" => {
-            "uri" => api_url("policy_groups/some_policy_group")
+            "uri" => platform.resource_url("policy_groups/some_policy_group")
           }
         }
       end
@@ -245,7 +245,7 @@ describe "Policies API endpoint", :policies do
 
       def assoc(policy_data, policy_group)
         policy_name = name_of(policy_data)
-        url = api_url("policy_groups/#{policy_group}/policies/#{policy_name}")
+        url = platform.resource_url("policy_groups/#{policy_group}/policies/#{policy_name}")
         {
           url: url,
           policy_name: policy_name,
@@ -290,13 +290,13 @@ describe "Policies API endpoint", :policies do
       let(:expected_policies_list) do
         {
           "some_policy_name" => {
-            "uri" => api_url("policies/some_policy_name"),
+            "uri" => platform.resource_url("policies/some_policy_name"),
             "revisions" => {
               "909c26701e291510eacdc6c06d626b9fa5350d25" => {}
             }
           },
           "appserver" => {
-            "uri" => api_url("policies/appserver"),
+            "uri" => platform.resource_url("policies/appserver"),
             "revisions" => {
               "1111111111111111111111111111111111111111" => {},
               "2222222222222222222222222222222222222222" => {},
@@ -304,7 +304,7 @@ describe "Policies API endpoint", :policies do
             }
           },
           "db" => {
-            "uri" => api_url("policies/db"),
+            "uri" => platform.resource_url("policies/db"),
             "revisions" => {
               "6666666666666666666666666666666666666666" => {},
               "7777777777777777777777777777777777777777" => {},
@@ -312,7 +312,7 @@ describe "Policies API endpoint", :policies do
             }
           },
           "cache" => {
-            "uri" => api_url("policies/cache"),
+            "uri" => platform.resource_url("policies/cache"),
             "revisions" => {
               "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" => {},
               "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" => {}
@@ -323,7 +323,7 @@ describe "Policies API endpoint", :policies do
 
       let(:expected_dev_group_data) do
         {
-          "uri" => api_url("policy_groups/dev"),
+          "uri" => platform.resource_url("policy_groups/dev"),
           "policies" => {
             "db" => { "revision_id" => "6666666666666666666666666666666666666666" },
             "appserver" => { "revision_id" => "1111111111111111111111111111111111111111" },
@@ -334,7 +334,7 @@ describe "Policies API endpoint", :policies do
 
       let(:expected_test_group_data) do
         {
-          "uri" => api_url("policy_groups/test"),
+          "uri" => platform.resource_url("policy_groups/test"),
           "policies" => {
             "db" => { "revision_id" => "7777777777777777777777777777777777777777" },
             "appserver" => { "revision_id" => "2222222222222222222222222222222222222222" },
@@ -345,7 +345,7 @@ describe "Policies API endpoint", :policies do
 
       let(:expected_prod_group_data) do
         {
-          "uri" => api_url("policy_groups/prod"),
+          "uri" => platform.resource_url("policy_groups/prod"),
           "policies" => {
             "db" => { "revision_id" => "8888888888888888888888888888888888888888" },
             "appserver" => { "revision_id" => "3333333333333333333333333333333333333333" }
@@ -430,7 +430,7 @@ describe "Policies API endpoint", :policies do
 
         let(:expected_body) do
           {
-            "uri" => api_url("policy_groups/example-policy-group"),
+            "uri" => platform.resource_url("policy_groups/example-policy-group"),
             "policies" => {}
           }
         end
@@ -458,7 +458,7 @@ describe "Policies API endpoint", :policies do
 
         let(:expected_body) do
           {
-            "uri" => api_url("policy_groups/example-policy-group"),
+            "uri" => platform.resource_url("policy_groups/example-policy-group"),
             "policies" => {
               "some_policy_name" => { "revision_id" => "909c26701e291510eacdc6c06d626b9fa5350d25" }
             }

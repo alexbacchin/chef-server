@@ -174,7 +174,7 @@ module Pedant
         {
           :status => 201,
           :body_exact => {
-            "uri" => api_url("/nodes/#{node_name}")
+            "uri" => platform.resource_url("/nodes/#{node_name}")
           }
         }
       end
@@ -248,7 +248,7 @@ module Pedant
       end
 
       def node_list_response(names)
-        names.inject({}) { |h, name| h[name] = api_url("/nodes/#{name}"); h }
+        names.inject({}) { |h, name| h[name] = platform.resource_url("/nodes/#{name}"); h }
       end
 
     end

@@ -425,7 +425,7 @@ describe "Environments API Endpoint", :environments do
 
         let(:assume_existing_environment!) { post(api_url("/environments"), admin_user, payload: existing_environment) }
         let(:create_existing_environment_response) do
-          created_response.with(:body_exact, 'uri' => api_url("/environments/#{existing_environment_name}"))
+          created_response.with(:body_exact, 'uri' => platform.resource_url("/environments/#{existing_environment_name}"))
         end
 
         before(:each) do

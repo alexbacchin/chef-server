@@ -127,10 +127,10 @@ describe "/environments/ENVIRONMENT/cookbooks/COOKBOOK API endpoint", :environme
 
         if (name == cookbook_name)
           body[name] = {
-            "url" => api_url("/cookbooks/#{name}"),
+            "url" => platform.resource_url("/cookbooks/#{name}"),
             "versions" => version_specs.map do |version_string, recipe_names|
               {
-                "url" => api_url("/cookbooks/#{name}/#{version_string}"),
+                "url" => platform.resource_url("/cookbooks/#{name}/#{version_string}"),
                 "version" => version_string
               }
             end
@@ -201,10 +201,10 @@ describe "/environments/ENVIRONMENT/cookbooks/COOKBOOK API endpoint", :environme
         def expected_filtered_response(cookbook, allowed_versions)
           body = {}
           body[cookbook] = {
-            "url" => api_url("/cookbooks/#{cookbook}"),
+            "url" => platform.resource_url("/cookbooks/#{cookbook}"),
             "versions" => allowed_versions.map do |version|
               {
-                "url" => api_url("/cookbooks/#{cookbook}/#{version}"),
+                "url" => platform.resource_url("/cookbooks/#{cookbook}/#{version}"),
                 "version" => version
               }
             end

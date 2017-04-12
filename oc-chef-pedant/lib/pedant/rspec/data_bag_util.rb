@@ -76,9 +76,9 @@ module Pedant
         {
           :status => 200,
           :body_exact => {
-            data_bag_1_name => api_url("/data/#{data_bag_1_name}"),
+            data_bag_1_name => platform.resource_url("/data/#{data_bag_1_name}"),
 
-            data_bag_2_name => api_url("/data/#{data_bag_2_name}")
+            data_bag_2_name => platform.resource_url("/data/#{data_bag_2_name}")
           }
         }
       end

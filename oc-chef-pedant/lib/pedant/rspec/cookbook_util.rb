@@ -283,11 +283,11 @@ module Pedant
       end
 
       def cookbook_url(cookbook_name)
-        api_url("/#{cookbook_url_base}/#{cookbook_name}")
+        platform.resource_url("/#{cookbook_url_base}/#{cookbook_name}")
       end
 
       def cookbook_version_url(cookbook_name, cookbook_version)
-        api_url("/#{cookbook_url_base}/#{cookbook_name}/#{cookbook_version}")
+        platform.resource_url("/#{cookbook_url_base}/#{cookbook_name}/#{cookbook_version}")
       end
 
       def delete_cookbook(requestor, name, version)

@@ -24,6 +24,9 @@ module Pedant
       def org_base_url
         "#{platform.server}/organizations/#{org_name}"
       end
+      def org_resource_base_url
+        "#{platform.base_resource_url}/organizations/#{org_name}"
+      end
 
       def add_user_key(user, key, key_name, options = {})
         payload = add_key_body(key, key_name, options)
@@ -124,7 +127,8 @@ module Pedant
           end
 
           it "should create a key with proper response and Location header" do
-            expected_location = "#{key_url}/#{key_payload['name']}"
+            expected_location = "#{key_resource}/#{key_payload['name']}"
+
             response = post("#{key_url}", superuser, payload: key_payload)
             response.should look_like(
               {
@@ -135,7 +139,7 @@ module Pedant
           end
 
           it "and infinity date is specfied it should still create a key with proper response and Location header" do
-            expected_location = "#{key_url}/#{key_payload['name']}"
+            expected_location = "#{key_resource}/#{key_payload['name']}"
             key_payload["expiration_date"] = "infinity"
             response = post("#{key_url}", superuser, payload: key_payload)
             response.should look_like(
@@ -148,7 +152,7 @@ module Pedant
 
           it "when 'create_key' is false alongside a public key it should not generate a private key" do
             key_payload["create_key"] = false
-            expected_location = "#{key_url}/#{key_payload['name']}"
+            expected_location = "#{key_resource}/#{key_payload['name']}"
             response = post(key_url, superuser, payload: key_payload)
             response.should look_like(status: 201,
                                       body_exact: { "uri" => expected_location })
@@ -157,7 +161,7 @@ module Pedant
           it "when 'create_key' : true is specified in lieu of public key it should generate a new private key and reply with it in the body" do
             key_payload["create_key"] = true
             key_payload.delete("public_key")
-            expected_location = "#{key_url}/#{key_payload['name']}"
+            expected_location = "#{key_resource}/#{key_payload['name']}"
             response = post(key_url, superuser, payload: key_payload)
             response.should look_like(status: 201,
                                       body_exact: { "uri" => expected_location,

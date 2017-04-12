@@ -70,7 +70,7 @@ module Pedant
       # These will be used all over the place
       let(:clients_url){api_url("/clients")}
       let(:client_name) { fail "Please specify a 'client_name' first" }
-      let(:named_client_url){api_url("/clients/#{client_name}")}
+      let(:named_client_url) {platform.resource_url("/clients/#{client_name}")}
 
       let(:client_not_found_response) { resource_not_found_response }
 

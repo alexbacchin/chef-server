@@ -636,7 +636,7 @@ module Pedant
         {
           :status => 200,
           :body_exact => index_names.inject({}){|acc, i|
-            acc[i] = api_url("/search/#{i}")
+            acc[i] = platform.resource_url("/search/#{i}")
             acc
           }
         }

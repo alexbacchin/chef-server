@@ -18,6 +18,7 @@ describe "users", :users do
 
   context "/users endpoint" do
     let(:request_url) { "#{platform.base_resource_url}/users" }
+    let(:reponse_url) { "#{platform.base_resource_url}/users" }
 
     context "GET /users" do
       let(:users_body) do
@@ -620,6 +621,7 @@ describe "users", :users do
   context "/users/<name> endpoint" do
     let(:username) { platform.non_admin_user.name }
     let(:request_url) { "#{platform.server}/users/#{username}" }
+    let(:response_url) { "#{platform.base_resource_url}/users/#{username}" }
 
     context "GET /users/<name>" do
       let(:user_body) do
@@ -1331,7 +1333,7 @@ EOF
             put_response.should look_like({
                                             :status => 200,
                                             :body=> {
-                                              "uri" => request_url
+                                              "uri" => response_url
                                             },
                                           })
             get_response = get(request_url, platform.superuser)
@@ -1358,7 +1360,7 @@ EOF
             put_response.should look_like({
                                             :status => 200,
                                             :body_exact => {
-                                              "uri" => request_url,
+                                              "uri" => response_url,
                                               "private_key" => private_key_regex
                                             },
                                           })
@@ -1394,7 +1396,7 @@ EOF
             put_response.should look_like({
                                             :status => 200,
                                             :body_exact => {
-                                              "uri" => request_url,
+                                              "uri" => response_url,
                                               "private_key" => private_key_regex
                                             },
                                           })
@@ -1432,7 +1434,7 @@ EOF
             put_response.should look_like({
                                             :status => 200,
                                             :body_exact => {
-                                              "uri" => request_url,
+                                              "uri" => response_url,
                                               "private_key" => private_key_regex
                                             },
                                           })
@@ -1470,7 +1472,7 @@ EOF
             put_response.should look_like({
                                             :status => 200,
                                             :body_exact => {
-                                              "uri" => request_url,
+                                              "uri" => response_url,
                                               "private_key" => private_key_regex
                                             },
                                           })
@@ -1511,6 +1513,7 @@ EOF
       context "renaming users" do
         let(:new_name) { "test2-#{Time.now.to_i}-#{Process.pid}" }
         let(:new_request_url) { "#{platform.server}/users/#{new_name}" }
+        let(:new_response_url) { "#{platform.base_resource_url}/users/#{new_name}" }
 
         context "changing username" do
           let(:request_body) do
@@ -1547,8 +1550,8 @@ EOF
               put(request_url, platform.superuser,
                 :payload => request_body).should look_like({
                   :status => 201,
-                  :body_exact => { "uri" => new_request_url },
-                  :headers => [ "Location" => new_request_url ]
+                  :body_exact => { "uri" => new_response_url },
+                  :headers => [ "Location" => new_response_url ]
                 })
 
               # it "makes the user unavailable at the old URI"
@@ -1704,7 +1707,7 @@ EOF
           }).should look_like({
             :status => 201,
             :body_exact => {
-              "uri" => "#{platform.server}/users/#{username}",
+              "uri" => "#{platform.base_resource_url}/users/#{username}",
               "private_key" => private_key_regex
             }})
       end
@@ -1755,7 +1758,8 @@ EOF
       end
 
       context "when deleting a non-existent user" do
-          let(:request_url) { "#{platform.server}/users/bogus" }
+        let(:request_url) { "#{platform.server}/users/bogus" }
+
         it "returns 404" do
           delete(request_url, platform.superuser).should look_like({
               :status => 404

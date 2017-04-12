@@ -74,7 +74,7 @@ describe "User keys endpoint", :keys, :user_keys do
 
   let(:new_user_list_keys_response) do
     [ { "name" => "default",
-        "uri" => "#{platform.server}/users/#{user['name']}/keys/default",
+        "uri" => "#{platform.base_resource_url}/users/#{user['name']}/keys/default",
         "expired" => false
       }
     ]
@@ -519,6 +519,7 @@ describe "User keys endpoint", :keys, :user_keys do
 
     context "posting keys to /users/user" do
       let(:key_url) { "#{platform.server}/users/#{org_user_name}/keys" }
+      let (:key_resource) { "#{platform.base_resource_url}/users/#{org_user_name}/keys" }
 
       it_behaves_like "basic keys POST validation"
 
@@ -769,6 +770,10 @@ describe "User keys endpoint", :keys, :user_keys do
     end
 
     context "listing key(s)" do
+      let(:keys_resource) {
+        platform.resource_url("/users/#{org_user_name}/keys", org_name)
+      }
+
       context "GET /organizations/organization/users/user/keys" do
         context "when multiple keys are present" do
           before(:each) do
@@ -789,9 +794,9 @@ describe "User keys endpoint", :keys, :user_keys do
                 list_org_scoped_user_keys(org_name, org_user_name, current_requestor).should look_like({
                                                                                                          :status => 200,
                                                                                                          :body => [
-                                                                                                           { "name" => "default", "uri" => "#{platform.server}/organizations/#{org_name}/users/#{org_user_name}/keys/default", "expired" => false },
-                                                                                                           { "name" => "key1", "uri" => "#{platform.server}/organizations/#{org_name}/users/#{org_user_name}/keys/key1", "expired" => false },
-                                                                                                           { "name" => "key2", "uri" => "#{platform.server}/organizations/#{org_name}/users/#{org_user_name}/keys/key2", "expired" => true }
+                                                                                                           { "name" => "default", "uri" => "#{keys_resource}/default", "expired" => false },
+                                                                                                           { "name" => "key1", "uri" => "#{keys_resource}/key1", "expired" => false },
+                                                                                                           { "name" => "key2", "uri" => "#{keys_resource}/key2", "expired" => true }
                                                                                                          ]})
               end
 
@@ -1103,13 +1108,17 @@ describe "User keys endpoint", :keys, :user_keys do
           end
 
           context "when GET /users/user/keys is called (list keys)" do
+            let(:keys_resource) {
+              "#{platform.base_resource_url}/users/#{org_user_name}/keys"
+            }
+
             it "all keys should be listed with correct expiry indicators" do
               list_user_keys(org_user_name, superuser).should look_like(
                                                                 status: 200,
                                                                 body: [
-                                                                  { "name" => "default", "uri" => "#{platform.server}/users/#{org_user_name}/keys/default", "expired" => false },
-                                                                  { "name" => "key1", "uri" => "#{platform.server}/users/#{org_user_name}/keys/key1", "expired" => false },
-                                                                  { "name" => "key2", "uri" => "#{platform.server}/users/#{org_user_name}/keys/key2", "expired" => true }
+                                                                  { "name" => "default", "uri" => "#{keys_resource}/default", "expired" => false },
+                                                                  { "name" => "key1", "uri" => "#{keys_resource}/key1", "expired" => false },
+                                                                  { "name" => "key2", "uri" => "#{keys_resource}/key2", "expired" => true }
                                                                 ]
                                                               )
             end

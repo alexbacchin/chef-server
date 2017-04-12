@@ -39,7 +39,7 @@ describe "Environments API Endpoint", :environments do
       context 'GET /environments' do
         let(:request_url) { api_url "/environments" }
         let(:expected_response) { ok_exact_response }
-        let(:success_message) { { "_default" => api_url("/environments/_default") } }
+        let(:success_message) { { "_default" => platform.resource_url("/environments/_default") } }
 
         should_respond_with 200
       end
@@ -93,7 +93,7 @@ describe "Environments API Endpoint", :environments do
               should look_like({
               :status => 201,
               :body_exact => {
-              "uri" => api_url("/environments/#{new_environment_name}")
+              "uri" => platform.resource_url("/environments/#{new_environment_name}")
             }})
                end
           post(api_url("/environments"), admin_user,
@@ -102,7 +102,7 @@ describe "Environments API Endpoint", :environments do
               should look_like({
               :status => 201,
               :body_exact => {
-              "uri" => api_url("/environments/#{other_env}")
+              "uri" => platform.resource_url("/environments/#{other_env}")
             }})
                end
         end
@@ -118,10 +118,10 @@ describe "Environments API Endpoint", :environments do
               should look_like({
               :status => 200,
               :body_exact => {
-              "_default" => api_url("/environments/_default"),
+              "_default" => platform.resource_url("/environments/_default"),
               new_environment_name =>
-            api_url("/environments/#{new_environment_name}"),
-            "#{other_env}" =>api_url("/environments/#{other_env}")
+            platform.resource_url("/environments/#{new_environment_name}"),
+            "#{other_env}" =>platform.resource_url("/environments/#{other_env}")
             }})
           end
         end

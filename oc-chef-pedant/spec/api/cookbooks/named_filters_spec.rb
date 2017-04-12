@@ -33,7 +33,7 @@ describe "Cookbooks API endpoint, named filters", :cookbooks, :cookbooks_named_f
       name, version_specs  = cookbook_spec
       latest_version = version_specs.first
       version_string, _recipe_names = latest_version
-      body[name] = api_url("/#{cookbook_url_base}/#{name}/#{version_string}")
+      body[name] = platform.resource_url("/#{cookbook_url_base}/#{name}/#{version_string}")
       body
     end
   end
@@ -45,10 +45,10 @@ describe "Cookbooks API endpoint, named filters", :cookbooks, :cookbooks_named_f
     cookbook.inject({}) do |body, cookbook_spec|
       name, version_specs  = cookbook_spec
       body[name] = {
-        "url" => api_url("/#{cookbook_url_base}/#{name}"),
+        "url" => platform.resource_url("/#{cookbook_url_base}/#{name}"),
         "versions" => version_specs.map do |version, recipes|
           { "version" => version,
-            "url" => api_url("/#{cookbook_url_base}/#{name}/#{version}")
+            "url" => platform.resource_url("/#{cookbook_url_base}/#{name}/#{version}")
           }
         end
       }

@@ -193,10 +193,10 @@ describe "/environments/ENVIRONMENT/cookbooks API endpoint", :environments, :coo
           spec.inject({}) do |body, kv|
             cookbook, allowed_versions = kv
             body[cookbook] = {
-              "url" => api_url("/cookbooks/#{cookbook}"),
+              "url" => platform.resource_url("/cookbooks/#{cookbook}"),
               "versions" => allowed_versions.map do |version|
                 {
-                  "url" => api_url("/cookbooks/#{cookbook}/#{version}"),
+                  "url" => platform.resource_url("/cookbooks/#{cookbook}/#{version}"),
                   "version" => version
                 }
               end

@@ -174,7 +174,7 @@ describe "Environments API Endpoint", :environments do
           response.should look_like({
                                       :status => 201,
                                       :body => {
-                                        "uri" => api_url("/environments/#{new_environment_name}")
+                                        "uri" => platform.resource_url("/environments/#{new_environment_name}")
                                       }
                                     })
         end
@@ -211,7 +211,7 @@ describe "Environments API Endpoint", :environments do
           response.should look_like({
                                       :status => 201,
                                       :body => {
-                                        "uri" => api_url("/environments/#{new_environment_name}")
+                                        "uri" => platform.resource_url("/environments/#{new_environment_name}")
                                       }
                                     })
         end

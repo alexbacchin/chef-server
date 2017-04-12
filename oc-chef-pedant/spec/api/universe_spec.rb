@@ -48,14 +48,14 @@ describe 'Universe API Endpoint', :universe do
         "foo" => {
           "1.2.3" => {
             "dependencies" => { "bar" => ">= 1.1.1" },
-            "location_path" => api_url("cookbooks/foo/1.2.3"),
+            "location_path" => platform.resource_url("cookbooks/foo/1.2.3"),
             "location_type" => "chef_server"
           }
         },
         "bar" => {
           "1.2.3" => {
             "dependencies" => {},
-            "location_path" => api_url("cookbooks/bar/1.2.3"),
+            "location_path" => platform.resource_url("cookbooks/bar/1.2.3"),
             "location_type" => "chef_server"
           }
         }

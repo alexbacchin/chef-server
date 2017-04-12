@@ -42,7 +42,7 @@ describe "Environments API Endpoint", :environments do
 
     context 'with no additional environments' do
       let(:expected_response) { ok_exact_response }
-      let(:success_message) { { "_default" => api_url("/environments/_default") } }
+      let(:success_message) { { "_default" => platform.resource_url("/environments/_default") } }
 
       should_respond_with 200
 
@@ -64,8 +64,8 @@ describe "Environments API Endpoint", :environments do
       let(:expected_response) { ok_exact_response }
       let(:success_message) do
         {
-          "_default"           => api_url("/environments/_default"),
-          new_environment_name => api_url("/environments/#{new_environment_name}")
+          "_default"           => platform.resource_url("/environments/_default"),
+          new_environment_name => platform.resource_url("/environments/#{new_environment_name}")
         }
       end
 

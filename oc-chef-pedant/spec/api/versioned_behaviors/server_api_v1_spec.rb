@@ -96,17 +96,21 @@ describe "Server API v1 Behaviors", :api_v1 do
     end
 
     shared_context "actor creation validation" do
+      let(:named_response_url) { cannonicalize_resource_url(named_resource_url) }
+      let(:named_key_response_url) { cannonicalize_resource_url("#{named_resource_url}/keys/default") }
+
       after(:each) do
         delete("#{named_resource_url}", superuser)
       end
+
       # Note: validation of valid public key values is enabled for api_v1+ in
       # client_util.rb, via clients/complete_endpoint_spec.rb, and so is not covered here.
       it "should allow create_key: true and give a proper valid key in response" do
         result = post(resource_url, superuser,
                       payload: create_payload.with('create_key', true))
         result.should look_like({status: 201,
-                                 body_exact: { "uri" => named_resource_url,
-                                                "chef_key" => { "uri" => "#{named_resource_url}/keys/default",
+                                 body_exact: { "uri" => named_response_url,
+                                                "chef_key" => { "uri" => named_key_response_url,
                                                                 "name" => "default",
                                                                 "private_key" => privkey_regex,
                                                                 "public_key" => pubkey_regex,
@@ -118,8 +122,8 @@ describe "Server API v1 Behaviors", :api_v1 do
         result = post(resource_url, superuser,
                       payload: create_payload.with('public_key', valid_pubkey))
         result.should look_like({status: 201,
-                                 body_exact: { "uri" => named_resource_url,
-                                               "chef_key" => { "uri" => "#{named_resource_url}/keys/default",
+                                 body_exact: { "uri" =>  nameed_response_uri,
+                                               "chef_key" => { "uri" => named_key_response_url,
                                                                "name" => "default",
                                                                "public_key" => pubkey_regex,
                                                                "expiration_date" => "infinity" }  } })

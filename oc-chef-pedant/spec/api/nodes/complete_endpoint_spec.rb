@@ -71,7 +71,7 @@ describe "Testing the Nodes API endpoint", :nodes do
     let(:request_url)    { api_url("/nodes/#{node_name}") }
 
     context 'for a nonexistent node' do
-      let(:node_name){nonexistent_node_name}
+      let(:node_name) {nonexistent_node_name}
       it 'returns a 404' do
         should look_like node_not_found_response
       end
@@ -108,6 +108,8 @@ describe "Testing the Nodes API endpoint", :nodes do
     let(:node_name) { unique_name('testing_node' ) }
 
     let(:resource_url) { api_url "/nodes/#{node_name}" }
+    let(:response_url) { platform.resource_url "/nodes/#{node_name}" }
+
     let(:default_resource_attributes) { new_node(node_name) }
     let(:persisted_resource_response) { get(resource_url, platform.admin_client) }
 
@@ -118,7 +120,7 @@ describe "Testing the Nodes API endpoint", :nodes do
     context 'when validating' do
       after(:each) { delete_node platform.admin_user, resource_name }
       let(:resource_url) { api_url "/nodes/#{resource_name}" }
-      let(:reponse_url) { platform.resource_url "/nodes/#{resource_name}" }
+      let(:response_url) { platform.resource_url "/nodes/#{resource_name}" }
 
       context "when validating 'name' field" do
         let(:validate_attribute) { 'name' }
@@ -386,7 +388,7 @@ describe "Testing the Nodes API endpoint", :nodes do
 
     let(:request_method)  { :PUT }
     let(:request_url)     { api_url "/nodes/#{node_name}" }
-    let(:resource_url)    { pedant.resource_url "/nodes/#{node_name}" }
+    let(:response_url)    { platform.resource_url "/nodes/#{node_name}" }
     let(:node_name)       { 'pedant_node_test' }
 
     let(:minimal_node_update) do

@@ -81,7 +81,7 @@ describe "Client keys endpoint", :keys, :client_keys do
 
   let(:new_client_list_keys_response) do
     [ { "name" => "default",
-        "uri" => "#{org_base_url}/clients/#{client['name']}/keys/default",
+        "uri" => platform.resource_url("/clients/#{client['name']}/keys/default", org_name),
         "expired" => false
       }
     ]
@@ -439,6 +439,7 @@ describe "Client keys endpoint", :keys, :client_keys do
 
     context "posting keys" do
       let (:key_url) { "#{org_base_url}/clients/#{org_client_name}/keys" }
+      let (:key_resource) { "#{org_resource_base_url}/clients/#{org_client_name}/keys" }
 
       before(:each) do
         post("#{org_base_url}/clients", superuser, payload: org_client_payload).should look_like(status: 201)
@@ -676,6 +677,10 @@ describe "Client keys endpoint", :keys, :client_keys do
 
     context "listing key(s)" do
       context "when multiple keys are present" do
+        let(:keys_resource) {
+          platform.resource_url("/clients/#{org_client_name}/keys", org_name)
+        }
+
         before(:each) do
           post("#{org_base_url}/clients", superuser, payload: org_client_payload).should look_like(status: 201)
           add_client_key(org_name, org_client_name, :key, "key1", :expires =>  unexpired_date).should look_like({:status=>201})
@@ -692,9 +697,9 @@ describe "Client keys endpoint", :keys, :client_keys do
               list_client_keys(org_name, org_client_name, current_requestor).should look_like({
                 status: 200,
                 body_exact: [
-                  { "name" => "default", "uri" => "#{org_base_url}/clients/#{org_client_name}/keys/default", "expired" => false },
-                  { "name" => "key1", "uri" => "#{org_base_url}/clients/#{org_client_name}/keys/key1", "expired" => false },
-                  { "name" => "key2", "uri" => "#{org_base_url}/clients/#{org_client_name}/keys/key2", "expired" => true}
+                  { "name" => "default", "uri" => "#{keys_resource}/default", "expired" => false },
+                  { "name" => "key1", "uri" => "#{keys_resource}/key1", "expired" => false },
+                  { "name" => "key2", "uri" => "#{keys_resource}/key2", "expired" => true}
                 ]})
             end
 

@@ -22,7 +22,7 @@ describe "/organizations", :organizations do
           # Would actually probably contain additional orgs in body, but this is the only
           # one we know is there.
           :body => {
-            platform.test_org.name => "#{platform.server}/organizations/#{platform.test_org.name}"
+            platform.test_org.name => "#{platform.base_resource_url}/organizations/#{platform.test_org.name}"
           },
           :status => 200
         )
@@ -86,7 +86,7 @@ describe "/organizations", :organizations do
         post("#{platform.server}/organizations", superuser, :payload => request_body).should look_like(
           :body => {
             "clientname" => "#{orgname}-validator",
-            "uri" => "#{platform.server}/organizations/#{orgname}"
+            "uri" => "#{platform.base_resource_url}/organizations/#{orgname}"
           },
           :status => 201
         )

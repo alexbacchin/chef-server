@@ -33,7 +33,7 @@ describe "chef server authorization checks", :authorization do
                                  :status => 201,
                                  :body_exact => {
                                    "uri" =>
-                                   api_url("/#{resource_type}/#{new_name}")
+                                   platform.resource_url("/#{resource_type}/#{new_name}")
                                  }
                                })
           end
@@ -287,7 +287,7 @@ describe "chef server authorization checks", :authorization do
               should look_like({
                                  :status => 201,
                                  :body_exact => {
-                                   "uri" => api_url("/#{resource_type}/#{new_name}")
+                                   "uri" => platform.resource_url("/#{resource_type}/#{new_name}")
                                  }})
           end
           post(api_url("/#{resource_type}"), admin_user,
@@ -296,7 +296,7 @@ describe "chef server authorization checks", :authorization do
               should look_like({
                                  :status => 201,
                                  :body_exact => {
-                                   "uri" => api_url("/#{resource_type}/#{other_name}")
+                                   "uri" => platform.resource_url("/#{resource_type}/#{other_name}")
                                  }})
           end
         end
@@ -443,8 +443,8 @@ describe "chef server authorization checks", :authorization do
     let(:modified_resource2) { new_resource.merge({ "name" => other_name }) }
 
     let(:default_list) { {
-        new_name => api_url("/#{resource_type}/#{new_name}"),
-        "#{other_name}" => api_url("/#{resource_type}/#{other_name}")
+        new_name => platform.resource_url("/#{resource_type}/#{new_name}"),
+        "#{other_name}" => platform.resource_url("/#{resource_type}/#{other_name}")
       } }
 
     authorization_tests("roles")
@@ -480,9 +480,9 @@ describe "chef server authorization checks", :authorization do
     let(:modified_resource2) { new_resource.merge({ "name" => other_name }) }
 
     let(:default_list) { {
-        "_default" => api_url("/#{resource_type}/_default"),
-        new_name => api_url("/#{resource_type}/#{new_name}"),
-        "#{other_name}" => api_url("/#{resource_type}/#{other_name}")
+        "_default" => platform.resource_url("/#{resource_type}/_default"),
+        new_name => platform.resource_url("/#{resource_type}/#{new_name}"),
+        "#{other_name}" => platform.resource_url("/#{resource_type}/#{other_name}")
       } }
 
     authorization_tests("environments")
@@ -514,8 +514,8 @@ describe "chef server authorization checks", :authorization do
     let(:modified_resource2) { new_resource.merge({ "name" => other_name }) }
 
     let(:default_list) { {
-        new_name => api_url("/#{resource_type}/#{new_name}"),
-        "#{other_name}" => api_url("/#{resource_type}/#{other_name}")
+        new_name => platform.resource_url("/#{resource_type}/#{new_name}"),
+        "#{other_name}" => platform.resource_url("/#{resource_type}/#{other_name}")
       } }
 
     authorization_tests("nodes")

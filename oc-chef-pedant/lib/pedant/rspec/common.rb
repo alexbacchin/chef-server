@@ -87,6 +87,10 @@ module Pedant
           end
         end
 
+        def self.cannonicalize_resource_url(url)
+          url.sub(platform.server, platform.base_resource_url)
+        end
+
         # When creating a Chef object, not all of the fields we accept
         # in JSON request bodies need to be present; if missing, the
         # Chef Server will set them to sensible default values.

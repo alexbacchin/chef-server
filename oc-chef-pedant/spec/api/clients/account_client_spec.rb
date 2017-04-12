@@ -207,7 +207,7 @@ describe "opscode-account endpoint", :clients do
           :payload => {"name" => new_client_name}).should look_like({
             :status => 201,
             :body => {
-              'uri' => api_url("/clients/#{new_client_name}")
+              'uri' => platform.resource_url("/clients/#{new_client_name}")
             }
           })
       end

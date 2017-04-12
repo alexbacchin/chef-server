@@ -27,7 +27,7 @@ describe "Cookbook Artifacts API endpoint", :cookbook_artifacts, :cookbook_artif
   include Pedant::RSpec::CookbookUtil
 
   def cookbook_artifact_version_url(name, identifier)
-    api_url("/#{cookbook_url_base}/#{name}/#{identifier}")
+    platform.resource_url("/#{cookbook_url_base}/#{name}/#{identifier}")
   end
 
   context "GET /cookbook_artifacts" do

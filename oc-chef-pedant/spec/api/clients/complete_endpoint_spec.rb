@@ -36,7 +36,7 @@ describe "Client API endpoint", :clients do
     let(:request_url)    { clients_url }
 
     let(:clients_collection) { pedant_clients.inject({}, &client_name_to_url) }
-    let(:client_name_to_url) { ->(body, name) { body.with!(name, api_url("/clients/#{name}")) } }
+    let(:client_name_to_url) { ->(body, name) { body.with!(name, platform.resource_url("/clients/#{name}")) } }
 
     context 'as an admin user' do
       let(:requestor){admin_requestor}
@@ -73,11 +73,12 @@ describe "Client API endpoint", :clients do
     # useful for checking the result of a create operation
     # TODO: Refactor to resource_url
     let(:client_url) { api_url("/clients/#{client_name}") }
+    let(:client_resource_url)  { platform.resource_url("/clients/#{client_name}") }
 
     let(:expected_response) { resource_created_full_response }
-    let(:created_resource) { { "uri" => resource_url } }
-    let(:resource_url) { client_url }
-    let(:persisted_resource_response) { get(resource_url, superuser) }
+    let(:created_resource) { { "uri" => client_resource_url } }
+    let(:resource_url) { client_resource_url }
+    let(:persisted_resource_response) { get(client_url, superuser) }
     let(:default_resource_attributes) { default_client_attributes }
     let(:required_attributes) { default_client_attributes.except('private_key') }
 
