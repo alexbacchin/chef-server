@@ -122,7 +122,7 @@ describe "Server API v1 Behaviors", :api_v1 do
         result = post(resource_url, superuser,
                       payload: create_payload.with('public_key', valid_pubkey))
         result.should look_like({status: 201,
-                                 body_exact: { "uri" =>  nameed_response_uri,
+                                 body_exact: { "uri" =>  named_response_uri,
                                                "chef_key" => { "uri" => named_key_response_url,
                                                                "name" => "default",
                                                                "public_key" => pubkey_regex,
