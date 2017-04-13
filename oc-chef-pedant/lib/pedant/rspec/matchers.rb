@@ -69,19 +69,7 @@ module RSpec
         @expected.keys.all? do |key|
           spec = @expected[key]
           value = actual[key]
-
-          case spec
-          when Regexp
-            spec =~ value
-          when Array
-            array_matches?(spec, value)
-          when Hash
-            PedantHashComparator.new(spec, @mode).matches?(value)
-          when Proc then
-            spec.call(value)
-          else
-            spec == value
-          end
+          compare_value(spec, value)
         end
 
       end
@@ -95,12 +83,38 @@ module RSpec
         # Note this is going to be slow for large arrays,
         # though our actual usage shows we don't have any arrays on a
         # scale that would matter.
-        return true if spec.all? { |s| value.include? s }
-        # Our comparisons are more complex than simple value
-        spec.each_with_index  do |newspec, x|
-          return false unless PedantHashComparator.new(newspec, @mode).matches? value[x]
+        return true if spec.all? do |s|
+          value.any? do |v|
+            compare_value(s,v)
+          end
         end
-        return true
+        return false
+      end
+
+      def compare_value(spec, value)
+        case spec
+        when String
+          normalize(spec) == normalize(value)
+        when Regexp
+          spec =~ value
+        when Array
+          array_matches?(spec, value)
+        when Hash
+          PedantHashComparator.new(spec, @mode).matches?(value)
+        when Proc then
+          spec.call(value)
+        else
+          spec == value
+        end
+      end
+
+      #
+      def normalize(candidate)
+        if candidate.is_a?(String)
+          candidate.sub(/#{Pedant::Config.pedant_platform.server}/, Pedant::Config.pedant_platform.base_resource_url)
+        else
+          candidate
+        end
       end
 
       def friendly_actual
@@ -146,10 +160,6 @@ to the spec
 to fail, but it succeeded!
 """
       end
-
-
-
-
     end
   end
 end # PedantHashComparator
